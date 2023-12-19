@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeSpawner : MonoBehaviour
+public class ItemSpawner : MonoBehaviour
 {
    [SerializeField] private Grid _grid;
    [SerializeField] private GameObject _itemPrefab;
@@ -11,7 +11,7 @@ public class CubeSpawner : MonoBehaviour
    [SerializeField] private int _itemCountVertical;
    [SerializeField] private float _spawnTime;
 
-   private List<GameObject> _items;
+   private List<GameObject> _items = new();
 
    private void Awake()
    {
@@ -28,6 +28,7 @@ public class CubeSpawner : MonoBehaviour
          {
             var item = Instantiate(_itemPrefab, transform);
             item.transform.position = _grid.CellToWorld(new Vector3Int(x, 0, z));
+            _items.Add(item);
             
             yield return new WaitForSeconds(_spawnTime);
          }
