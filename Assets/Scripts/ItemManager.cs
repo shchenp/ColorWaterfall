@@ -24,10 +24,10 @@ public class ItemManager : MonoBehaviour
     {
         var color = Colorizer.GetColor();
 
-        foreach (var item in _items)
+        for (var i = 0; i < _items.Count; i++)
         {
-            item.StartChangeColor(color, _colorizingTime);
-            yield return new WaitForSeconds(_timeBeforeColorizing);
+            _items[i].StartChangeColor(color, _colorizingTime);
+            yield return new WaitForSeconds(_timeBeforeColorizing); 
         }
     }
 }
