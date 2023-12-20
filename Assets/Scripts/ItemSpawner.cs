@@ -2,16 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ItemSpawner : MonoBehaviour
 {
    [SerializeField] private Grid _grid;
-   [SerializeField] private GameObject _itemPrefab;
+   [SerializeField] private Item _itemPrefab;
    [SerializeField] private int _itemCountHorizontal;
    [SerializeField] private int _itemCountVertical;
    [SerializeField] private float _spawnTime;
-
-   private List<GameObject> _items = new();
+   [SerializeField] private UnityEvent<Item> _onItemSpawned;
 
    private void Awake()
    {
@@ -28,7 +28,7 @@ public class ItemSpawner : MonoBehaviour
          {
             var item = Instantiate(_itemPrefab, transform);
             item.transform.position = _grid.CellToWorld(new Vector3Int(x, 0, z));
-            _items.Add(item);
+            _onItemSpawned.Invoke(item);
             
             yield return new WaitForSeconds(_spawnTime);
          }
